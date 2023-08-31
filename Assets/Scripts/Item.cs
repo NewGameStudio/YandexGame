@@ -19,7 +19,8 @@ public class Item : MonoBehaviour
 
         if (distance < _activeDistance)
         {
-            transform.position = Vector3.Lerp(transform.position, _player.transform.position, _speed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, _player.transform.position, 
+                _speed * Time.deltaTime);
         }
     }
 }
