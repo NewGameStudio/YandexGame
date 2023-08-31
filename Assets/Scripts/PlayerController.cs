@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
     private float _horizontalSpeed;
 
     [SerializeField]
-    private float _fallSpeed;
+    private float _maxVerticalSpeed;
 
     [SerializeField]
-    private float _liftSpeed;
+    private float _verticalAcceleration;
+
+    private float _verticalSpeed;
 
     private void Update()
     {
@@ -32,11 +34,15 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            position += transform.up * _liftSpeed * Time.deltaTime;
+            _verticalSpeed += _verticalAcceleration;
         }
         else
         {
-            position -= transform.up * _fallSpeed * Time.deltaTime;
+            _verticalSpeed -= _verticalAcceleration;
         }
+
+        _verticalSpeed = Mathf.Clamp(_verticalSpeed, -_maxVerticalSpeed, _maxVerticalSpeed);
+
+        position += transform.up * _verticalSpeed * Time.deltaTime;
     }
 }
