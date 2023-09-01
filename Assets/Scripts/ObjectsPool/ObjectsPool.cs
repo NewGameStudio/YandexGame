@@ -2,32 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ObjectsPool
+namespace Patterns
 {
     public class ObjectsPool
     {
-        private Stack<IPoolableObject> _poolables;
+        private Stack<PoolableObject> _poolables;
         private IPoolableObjectsProvider _provider;
 
         public ObjectsPool(IPoolableObjectsProvider provider)
         {
-            _poolables = new Stack<IPoolableObject>();
+            _poolables = new Stack<PoolableObject>();
             _provider = provider;
         }
 
-        public IPoolableObject Instantiate()
+        public PoolableObject GetInstance()
         {
+            PoolableObject poolable;
+
             if (_poolables.Count > 0)
-                return _poolables.Pop();
-
-            IPoolableObject poolable = _provider.Create();
-
-            poolable.Initialize(this);
+            {
+                poolable = _poolables.Pop();
+                poolable.Active();
+            }
+            else
+            {
+                poolable = _provider.CreateNew();
+                poolable.SetPool(this);
+            }
 
             return poolable;
         }
 
-        public void AddToPool(IPoolableObject poolable)
+        public void AddToPool(PoolableObject poolable)
         {
             _poolables.Push(poolable);
         }

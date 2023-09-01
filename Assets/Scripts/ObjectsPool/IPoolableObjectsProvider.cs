@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ObjectsPool
+namespace Patterns
 {
-    public interface IPoolableObjectsProvider 
+    public interface IPoolableObjectsProvider
     {
-        IPoolableObject Create();
+        PoolableObject CreateNew();
     }
 }
