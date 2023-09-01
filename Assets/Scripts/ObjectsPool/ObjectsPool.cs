@@ -33,8 +33,10 @@ namespace Patterns
             return poolable;
         }
 
-        public void AddToPool(PoolableObject poolable)
+        public void Push(PoolableObject poolable)
         {
+            poolable.Deactive();
+
             _poolables.Push(poolable);
         }
     }
